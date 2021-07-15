@@ -33,6 +33,7 @@ class RestAssuredStatusCodeThen implements Then {
 	@Override
 	public MethodVisitor<Then> apply(SingleContractMetadata metadata) {
 		Response response = metadata.getContract().getResponse();
+		this.blockBuilder.addLineWithEnding("afterAssert(name, description, url, method, response)");
 		this.blockBuilder.addIndented(
 				this.comparisonBuilder.assertThat("response.statusCode()", response.getStatus().getServerValue()))
 				.addEndingIfNotPresent();

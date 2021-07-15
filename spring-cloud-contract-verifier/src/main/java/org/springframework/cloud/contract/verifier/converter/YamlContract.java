@@ -104,6 +104,8 @@ public class YamlContract {
 
 		public Multipart multipart;
 
+		public String after;
+
 		@Override
 		public boolean equals(Object o) {
 			if (this == o) {
@@ -119,13 +121,14 @@ public class YamlContract {
 					&& Objects.equals(headers, request.headers) && Objects.equals(cookies, request.cookies)
 					&& Objects.equals(body, request.body) && Objects.equals(bodyFromFile, request.bodyFromFile)
 					&& Objects.equals(bodyFromFileAsBytes, request.bodyFromFileAsBytes)
-					&& Objects.equals(matchers, request.matchers) && Objects.equals(multipart, request.multipart);
+					&& Objects.equals(matchers, request.matchers) && Objects.equals(multipart, request.multipart)
+					&& Objects.equals(after, request.after);
 		}
 
 		@Override
 		public int hashCode() {
 			return Objects.hash(method, url, urlPath, queryParameters, headers, cookies, body, bodyFromFile,
-					bodyFromFileAsBytes, matchers, multipart);
+					bodyFromFileAsBytes, matchers, multipart, after);
 		}
 
 		@Override
@@ -133,7 +136,8 @@ public class YamlContract {
 			return "Request{" + "method='" + method + '\'' + ", url='" + url + '\'' + ", urlPath='" + urlPath + '\''
 					+ ", queryParameters=" + queryParameters + ", headers=" + headers + ", cookies=" + cookies
 					+ ", body=" + body + ", bodyFromFile='" + bodyFromFile + '\'' + ", bodyFromFileAsBytes='"
-					+ bodyFromFileAsBytes + '\'' + ", matchers=" + matchers + ", multipart=" + multipart + '}';
+					+ bodyFromFileAsBytes + '\'' + ", matchers=" + matchers + ", multipart=" + multipart + ", after="
+					+ after + '}';
 		}
 
 	}

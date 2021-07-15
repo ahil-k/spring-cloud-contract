@@ -58,6 +58,8 @@ public class Request extends Common implements RegexCreatingProperty<ClientDslPr
 
 	private BodyMatchers bodyMatchers;
 
+	private ExecutionProperty after;
+
 	public Request() {
 	}
 
@@ -69,6 +71,19 @@ public class Request extends Common implements RegexCreatingProperty<ClientDslPr
 		this.cookies = request.getCookies();
 		this.body = request.getBody();
 		this.multipart = request.getMultipart();
+		this.after = request.getAfter();
+	}
+
+	public ExecutionProperty getAfter() {
+		return after;
+	}
+
+	public void setAfter(ExecutionProperty after) {
+		this.after = after;
+	}
+
+	public void after(String after) {
+		this.after = new ExecutionProperty(after);
 	}
 
 	/**
@@ -582,19 +597,20 @@ public class Request extends Common implements RegexCreatingProperty<ClientDslPr
 		return Objects.equals(method, request.method) && Objects.equals(url, request.url)
 				&& Objects.equals(urlPath, request.urlPath) && Objects.equals(headers, request.headers)
 				&& Objects.equals(cookies, request.cookies) && Objects.equals(body, request.body)
-				&& Objects.equals(multipart, request.multipart) && Objects.equals(bodyMatchers, request.bodyMatchers);
+				&& Objects.equals(multipart, request.multipart) && Objects.equals(bodyMatchers, request.bodyMatchers)
+				&& Objects.equals(after, request.getAfter());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(method, url, urlPath, headers, cookies, body, multipart, bodyMatchers);
+		return Objects.hash(method, url, urlPath, headers, cookies, body, multipart, bodyMatchers, after);
 	}
 
 	@Override
 	public String toString() {
 		return "Request{" + "\nmethod=" + method + ", \n\turl=" + url + ", \n\turlPath=" + urlPath + ", \n\theaders="
 				+ headers + ", \n\tcookies=" + cookies + ", \n\tbody=" + body + ", \n\tmultipart=" + multipart
-				+ ", \n\tbodyMatchers=" + bodyMatchers + '}';
+				+ ", \n\tbodyMatchers=" + bodyMatchers + ", \n\tafter=" + after + '}';
 	}
 
 	/**

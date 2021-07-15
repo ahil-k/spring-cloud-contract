@@ -54,8 +54,8 @@ class MockMvcCookiesGiven implements Given {
 	}
 
 	private String string(Cookie cookie) {
-		return ".cookie(" + ContentHelper.getTestSideForNonBodyValue(cookie.getKey()) + ", "
-				+ ContentHelper.getTestSideForNonBodyValue(cookie.getServerValue()) + ")";
+		return ".cookie(" + ContentHelper.getTestSideForNonBodyValue(cookie.getKey()) + ", renderContent("
+				+ ContentHelper.getTestSideForNonBodyValue(cookie.getServerValue()) + "))";
 	}
 
 	private boolean ofAbsentType(Cookie cookie) {

@@ -70,7 +70,7 @@ class MockMvcBodyGiven implements Given {
 			String escaped = escapeRequestSpecialChars(metadata, body.toString());
 			value = this.bodyParser.quotedEscapedLongText(escaped);
 		}
-		return ".body(" + value + ")";
+		return ".body(renderContent(" + value + "))";
 	}
 
 	private String escapeRequestSpecialChars(SingleContractMetadata metadata, String string) {

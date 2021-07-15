@@ -58,7 +58,7 @@ class MockMvcUrlWhen implements When, MockMvcAcceptor, QueryParamsResolver {
 		if (!(testSideUrl instanceof ExecutionProperty)) {
 			url = this.bodyParser.quotedShortText(testSideUrl.toString());
 		}
-		this.blockBuilder.addIndented("." + method + "(" + url + ")");
+		this.blockBuilder.addIndented("." + method + "(renderContent(" + url + "))");
 	}
 
 	@Override

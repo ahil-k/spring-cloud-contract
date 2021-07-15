@@ -57,9 +57,9 @@ class MockMvcHeadersGiven implements Given {
 
 	private String string(Header header) {
 		return ".header("
-				+ ContentHelper.getTestSideForNonBodyValue(header.getName()) + ", " + ContentHelper
+				+ ContentHelper.getTestSideForNonBodyValue(header.getName()) + ", renderContent(" + ContentHelper
 						.getTestSideForNonBodyValue(MapConverter.getTestSideValuesForNonBody(header.getServerValue()))
-				+ ")";
+				+ "))";
 	}
 
 	private boolean ofAbsentType(Header header) {

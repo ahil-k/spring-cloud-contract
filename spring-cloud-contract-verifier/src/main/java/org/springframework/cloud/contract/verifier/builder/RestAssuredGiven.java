@@ -49,7 +49,12 @@ class RestAssuredGiven implements Given, BodyMethodVisitor, RestAssuredAcceptor 
 	@Override
 	public MethodVisitor<Given> apply(SingleContractMetadata singleContractMetadata) {
 		startBodyBlock(this.blockBuilder, "given:");
+		this.blockBuilder.addLineWithEnding("var name = \"" + singleContractMetadata.getContract().getName() + "\"");
+		this.blockBuilder.addLineWithEnding(
+				"var description = \"" + singleContractMetadata.getContract().getDescription() + "\"");
+		this.blockBuilder.addLineWithEnding("beforeTest(name, description)");
 		addRequestGivenLine(singleContractMetadata);
+		this.blockBuilder.addIndented(".log().everything()");
 		indentedBodyBlock(this.blockBuilder, this.bodyGivens, singleContractMetadata);
 		this.blockBuilder.addEmptyLine();
 		return this;
