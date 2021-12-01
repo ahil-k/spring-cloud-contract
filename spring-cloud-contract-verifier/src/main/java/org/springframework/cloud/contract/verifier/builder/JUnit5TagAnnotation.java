@@ -17,32 +17,33 @@
 package org.springframework.cloud.contract.verifier.builder;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import org.springframework.cloud.contract.verifier.config.TestFramework;
+import org.springframework.cloud.contract.verifier.file.SingleContractMetadata;
 
-class JUnit5Imports implements Imports {
+class JUnit5TagAnnotation implements MethodAnnotations {
 
 	private final BlockBuilder blockBuilder;
 
 	private final GeneratedClassMetaData generatedClassMetaData;
 
-	private static final String[] IMPORTS = { "org.junit.jupiter.api.Test",
-			"org.junit.jupiter.api.extension.ExtendWith", "org.junit.jupiter.api.Tag", "org.junit.jupiter.api.Timeout",
-			"java.util.concurrent.TimeUnit" };
+	private static final String ANNOTATION = "@Tag(\"%s\")";
 
-	JUnit5Imports(BlockBuilder blockBuilder, GeneratedClassMetaData generatedClassMetaData) {
+	JUnit5TagAnnotation(BlockBuilder blockBuilder, GeneratedClassMetaData generatedClassMetaData) {
 		this.blockBuilder = blockBuilder;
 		this.generatedClassMetaData = generatedClassMetaData;
 	}
 
 	@Override
-	public Imports call() {
-		Arrays.stream(IMPORTS).forEach(s -> this.blockBuilder.addLineWithEnding("import " + s));
+	public MethodVisitor<MethodAnnotations> apply(SingleContractMetadata singleContractMetadata) {
+		singleContractMetadata.getContract().getGroups().stream().map(x -> String.format(ANNOTATION, x))
+				.forEach(this.blockBuilder::addIndented);
 		return this;
 	}
 
 	@Override
-	public boolean accept() {
+	public boolean accept(SingleContractMetadata singleContractMetadata) {
 		return this.generatedClassMetaData.configProperties.getTestFramework() == TestFramework.JUNIT5;
 	}
 

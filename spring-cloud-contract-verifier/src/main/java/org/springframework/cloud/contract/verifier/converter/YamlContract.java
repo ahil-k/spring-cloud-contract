@@ -57,6 +57,10 @@ public class YamlContract {
 
 	public Map<String, Object> metadata = new HashMap<>();
 
+	public List<String> groups = new ArrayList<>();
+
+	public String timeout;
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {
@@ -71,13 +75,14 @@ public class YamlContract {
 				&& Objects.equals(this.outputMessage, that.outputMessage)
 				&& Objects.equals(this.description, that.description) && Objects.equals(this.label, that.label)
 				&& Objects.equals(this.name, that.name) && Objects.equals(this.priority, that.priority)
-				&& this.metadata.equals(that.metadata);
+				&& this.metadata.equals(that.metadata) && Objects.equals(groups, that.groups)
+				&& Objects.equals(timeout, that.timeout);
 	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(request, response, input, outputMessage, description, label, name, priority, ignored,
-				inProgress, metadata);
+				inProgress, metadata, groups, timeout);
 	}
 
 	public static class Request {
@@ -106,6 +111,8 @@ public class YamlContract {
 
 		public String after;
 
+		public String before;
+
 		@Override
 		public boolean equals(Object o) {
 			if (this == o) {
@@ -122,13 +129,13 @@ public class YamlContract {
 					&& Objects.equals(body, request.body) && Objects.equals(bodyFromFile, request.bodyFromFile)
 					&& Objects.equals(bodyFromFileAsBytes, request.bodyFromFileAsBytes)
 					&& Objects.equals(matchers, request.matchers) && Objects.equals(multipart, request.multipart)
-					&& Objects.equals(after, request.after);
+					&& Objects.equals(after, request.after) && Objects.equals(before, request.before);
 		}
 
 		@Override
 		public int hashCode() {
 			return Objects.hash(method, url, urlPath, queryParameters, headers, cookies, body, bodyFromFile,
-					bodyFromFileAsBytes, matchers, multipart, after);
+					bodyFromFileAsBytes, matchers, multipart, after, before);
 		}
 
 		@Override
@@ -137,7 +144,7 @@ public class YamlContract {
 					+ ", queryParameters=" + queryParameters + ", headers=" + headers + ", cookies=" + cookies
 					+ ", body=" + body + ", bodyFromFile='" + bodyFromFile + '\'' + ", bodyFromFileAsBytes='"
 					+ bodyFromFileAsBytes + '\'' + ", matchers=" + matchers + ", multipart=" + multipart + ", after="
-					+ after + '}';
+					+ after + '\'' + ", before=" + before + '\'' + '}';
 		}
 
 	}

@@ -60,6 +60,8 @@ public class Request extends Common implements RegexCreatingProperty<ClientDslPr
 
 	private ExecutionProperty after;
 
+	private ExecutionProperty before;
+
 	public Request() {
 	}
 
@@ -72,6 +74,7 @@ public class Request extends Common implements RegexCreatingProperty<ClientDslPr
 		this.body = request.getBody();
 		this.multipart = request.getMultipart();
 		this.after = request.getAfter();
+		this.before = request.getBefore();
 	}
 
 	public ExecutionProperty getAfter() {
@@ -84,6 +87,18 @@ public class Request extends Common implements RegexCreatingProperty<ClientDslPr
 
 	public void after(String after) {
 		this.after = new ExecutionProperty(after);
+	}
+
+	public ExecutionProperty getBefore() {
+		return before;
+	}
+
+	public void setBefore(ExecutionProperty before) {
+		this.before = before;
+	}
+
+	public void before(String before) {
+		this.before = new ExecutionProperty(before);
 	}
 
 	/**
@@ -598,19 +613,19 @@ public class Request extends Common implements RegexCreatingProperty<ClientDslPr
 				&& Objects.equals(urlPath, request.urlPath) && Objects.equals(headers, request.headers)
 				&& Objects.equals(cookies, request.cookies) && Objects.equals(body, request.body)
 				&& Objects.equals(multipart, request.multipart) && Objects.equals(bodyMatchers, request.bodyMatchers)
-				&& Objects.equals(after, request.getAfter());
+				&& Objects.equals(after, request.getAfter()) && Objects.equals(before, request.getBefore());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(method, url, urlPath, headers, cookies, body, multipart, bodyMatchers, after);
+		return Objects.hash(method, url, urlPath, headers, cookies, body, multipart, bodyMatchers, after, before);
 	}
 
 	@Override
 	public String toString() {
 		return "Request{" + "\nmethod=" + method + ", \n\turl=" + url + ", \n\turlPath=" + urlPath + ", \n\theaders="
 				+ headers + ", \n\tcookies=" + cookies + ", \n\tbody=" + body + ", \n\tmultipart=" + multipart
-				+ ", \n\tbodyMatchers=" + bodyMatchers + ", \n\tafter=" + after + '}';
+				+ ", \n\tbodyMatchers=" + bodyMatchers + ", \n\tafter=" + after + ", \n\tbefore=" + before + '}';
 	}
 
 	/**

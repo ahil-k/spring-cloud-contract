@@ -38,7 +38,9 @@ class MethodAnnotationBuilder {
 
 	MethodAnnotationBuilder jUnit5() {
 		this.singleMethodBuilder.methodAnnotation(new JUnit5MethodAnnotation(this.builder, this.metaData),
-				new JUnit5IgnoreMethodAnnotation(this.builder, this.metaData));
+				new JUnit5IgnoreMethodAnnotation(this.builder, this.metaData),
+				new JUnit5TimeoutAnnotation(this.builder, this.metaData),
+				new JUnit5TagAnnotation(this.builder, this.metaData));
 		return this;
 	}
 

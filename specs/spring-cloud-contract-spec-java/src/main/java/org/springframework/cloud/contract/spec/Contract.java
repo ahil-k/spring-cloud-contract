@@ -16,7 +16,9 @@
 
 package org.springframework.cloud.contract.spec;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -101,6 +103,10 @@ public class Contract {
 	 * Mapping of metadata. Can be used for external integrations.
 	 */
 	private Map<String, Object> metadata = new HashMap<>();
+
+	private List<String> groups = new ArrayList<>();
+
+	private String timeout;
 
 	public Contract() {
 
@@ -383,6 +389,30 @@ public class Contract {
 		return metadata;
 	}
 
+	public List<String> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(List<String> groups) {
+		this.groups = groups;
+	}
+
+	public void groups(List<String> groups) {
+		this.groups = groups;
+	}
+
+	public String getTimeout() {
+		return timeout;
+	}
+
+	public void setTimeout(String timeout) {
+		this.timeout = timeout;
+	}
+
+	public void timeout(String timeout) {
+		this.timeout = timeout;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {
@@ -396,13 +426,14 @@ public class Contract {
 				&& Objects.equals(request, contract.request) && Objects.equals(response, contract.response)
 				&& Objects.equals(label, contract.label) && Objects.equals(description, contract.description)
 				&& Objects.equals(name, contract.name) && Objects.equals(input, contract.input)
-				&& Objects.equals(metadata, contract.metadata) && Objects.equals(outputMessage, contract.outputMessage);
+				&& Objects.equals(metadata, contract.metadata) && Objects.equals(outputMessage, contract.outputMessage)
+				&& Objects.equals(groups, contract.groups) && Objects.equals(timeout, contract.timeout);
 	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(priority, request, response, label, description, name, input, outputMessage, metadata,
-				ignored);
+				ignored, groups, timeout);
 	}
 
 	@Override
@@ -410,7 +441,7 @@ public class Contract {
 		return "Contract{" + "\npriority=" + priority + ", \n\trequest=" + request + ", \n\tresponse=" + response
 				+ ", \n\tlabel='" + label + '\'' + ", \n\tdescription='" + description + '\'' + ", \n\tname='" + name
 				+ '\'' + ", \n\tinput=" + input + ", \n\toutputMessage=" + outputMessage + ", \n\tignored=" + ignored
-				+ '}';
+				+ ", \n\tgroups=" + groups + ", \n\ttimeout=" + timeout + '}';
 	}
 
 }

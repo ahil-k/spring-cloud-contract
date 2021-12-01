@@ -16,33 +16,33 @@
 
 package org.springframework.cloud.contract.verifier.builder;
 
-import java.util.Arrays;
-
 import org.springframework.cloud.contract.verifier.config.TestFramework;
+import org.springframework.cloud.contract.verifier.file.SingleContractMetadata;
 
-class JUnit5Imports implements Imports {
+class JUnit5TimeoutAnnotation implements MethodAnnotations {
 
 	private final BlockBuilder blockBuilder;
 
 	private final GeneratedClassMetaData generatedClassMetaData;
 
-	private static final String[] IMPORTS = { "org.junit.jupiter.api.Test",
-			"org.junit.jupiter.api.extension.ExtendWith", "org.junit.jupiter.api.Tag", "org.junit.jupiter.api.Timeout",
-			"java.util.concurrent.TimeUnit" };
+	private static final String ANNOTATION = "@Timeout(%s)";
 
-	JUnit5Imports(BlockBuilder blockBuilder, GeneratedClassMetaData generatedClassMetaData) {
+	JUnit5TimeoutAnnotation(BlockBuilder blockBuilder, GeneratedClassMetaData generatedClassMetaData) {
 		this.blockBuilder = blockBuilder;
 		this.generatedClassMetaData = generatedClassMetaData;
 	}
 
 	@Override
-	public Imports call() {
-		Arrays.stream(IMPORTS).forEach(s -> this.blockBuilder.addLineWithEnding("import " + s));
+	public MethodVisitor<MethodAnnotations> apply(SingleContractMetadata singleContractMetadata) {
+		String timeout = singleContractMetadata.getContract().getTimeout();
+		if (timeout != null && !timeout.trim().isEmpty()) {
+			this.blockBuilder.addIndented(String.format(ANNOTATION, timeout));
+		}
 		return this;
 	}
 
 	@Override
-	public boolean accept() {
+	public boolean accept(SingleContractMetadata singleContractMetadata) {
 		return this.generatedClassMetaData.configProperties.getTestFramework() == TestFramework.JUNIT5;
 	}
 

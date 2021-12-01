@@ -116,6 +116,8 @@ class YamlToContracts {
 				mapResponse(yamlContract, dslContract);
 				mapInput(yamlContract, dslContract);
 				mapOutput(yamlContract, dslContract);
+				mapRequestGroups(yamlContract, dslContract);
+				mapRequestTimeout(yamlContract, dslContract);
 			});
 			contracts.add(contract);
 		}
@@ -177,6 +179,7 @@ class YamlToContracts {
 				mapRequestMultiPart(yamlContractRequest, dslContractRequest);
 				mapRequestBodyMatchers(yamlContractRequest, dslContractRequest);
 				mapRequestAfter(yamlContractRequest, dslContractRequest);
+				mapRequestBefore(yamlContractRequest, dslContractRequest);
 			});
 		}
 	}
@@ -190,6 +193,12 @@ class YamlToContracts {
 	private void mapRequestAfter(YamlContract.Request yamlContractRequest, Request dslContractRequest) {
 		if (yamlContractRequest.after != null) {
 			dslContractRequest.after(yamlContractRequest.after);
+		}
+	}
+
+	private void mapRequestBefore(YamlContract.Request yamlContractRequest, Request dslContractRequest) {
+		if (yamlContractRequest.before != null) {
+			dslContractRequest.before(yamlContractRequest.before);
 		}
 	}
 
@@ -555,6 +564,18 @@ class YamlToContracts {
 				mapOutputBody(yamlContractOutputMessage, dslContractOutputMessage);
 				mapOutputBodyMatchers(yamlContractOutputMessage, dslContractOutputMessage);
 			});
+		}
+	}
+
+	private void mapRequestGroups(YamlContract yamlContract, Contract dslContract) {
+		if (yamlContract.groups != null) {
+			dslContract.groups(yamlContract.groups);
+		}
+	}
+
+	private void mapRequestTimeout(YamlContract yamlContract, Contract dslContract) {
+		if (yamlContract.timeout != null) {
+			dslContract.timeout(yamlContract.timeout);
 		}
 	}
 
