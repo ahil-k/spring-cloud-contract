@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION="3.1.0-tweak.2"
+VERSION="3.1.0-tweak.3"
 quick_build() {
     # for quick build and frequent changes and 
     pushd specs/spring-cloud-contract-spec-java

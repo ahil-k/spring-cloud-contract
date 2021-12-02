@@ -100,13 +100,6 @@ class GenericJsonBodyThen implements Then {
 			simpleTextResponseBodyCheck(contractMetadata, convertedResponseBody);
 		}
 		processBodyElement("", "", convertedResponseBody);
-
-		// this.blockBuilder.addLineWithEnding("afterAssert(name, description, url,
-		// method, response)");
-		if (null != contractMetadata.getContract().getRequest().getAfter()) {
-			this.blockBuilder
-					.addLineWithEnding(contractMetadata.getContract().getRequest().getAfter().getExecutionCommand());
-		}
 	}
 
 	private void processBodyElement(String oldProp, String property, Object value) {

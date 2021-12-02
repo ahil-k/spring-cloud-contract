@@ -46,7 +46,7 @@ class GenericHttpBodyThen implements Then, BodyMethodVisitor {
 				Arrays.asList(new GenericBinaryBodyThen(blockBuilder, metaData, this.bodyParser, comparisonBuilder),
 						new GenericTextBodyThen(blockBuilder, metaData, this.bodyParser, this.comparisonBuilder),
 						new GenericJsonBodyThen(blockBuilder, metaData, this.bodyParser, this.comparisonBuilder),
-						new GenericXmlBodyThen(blockBuilder, this.bodyParser)));
+						new GenericXmlBodyThen(blockBuilder, this.bodyParser), new GenericAfterBodyThen(blockBuilder)));
 	}
 
 	@Override

@@ -56,12 +56,6 @@ class GenericTextBodyThen implements Then {
 		this.blockBuilder.addLineWithEnding(getSimpleResponseBodyString(this.bodyParser.responseAsString()));
 		this.bodyAssertionLineCreator.appendBodyAssertionLine(metadata, "", convertedResponseBody);
 		this.blockBuilder.addEndingIfNotPresent();
-
-		// this.blockBuilder.addLineWithEnding("afterAssert(name, description, url,
-		// method, response)");
-		if (null != metadata.getContract().getRequest().getAfter()) {
-			this.blockBuilder.addLineWithEnding(metadata.getContract().getRequest().getAfter().getExecutionCommand());
-		}
 	}
 
 	private String getSimpleResponseBodyString(String responseString) {
