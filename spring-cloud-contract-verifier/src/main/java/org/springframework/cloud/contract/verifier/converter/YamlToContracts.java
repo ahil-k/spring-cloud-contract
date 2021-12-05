@@ -180,6 +180,7 @@ class YamlToContracts {
 				mapRequestBodyMatchers(yamlContractRequest, dslContractRequest);
 				mapRequestAfter(yamlContractRequest, dslContractRequest);
 				mapRequestBefore(yamlContractRequest, dslContractRequest);
+				mapRequestBaseUri(yamlContractRequest, dslContractRequest);
 			});
 		}
 	}
@@ -199,6 +200,12 @@ class YamlToContracts {
 	private void mapRequestBefore(YamlContract.Request yamlContractRequest, Request dslContractRequest) {
 		if (yamlContractRequest.before != null) {
 			dslContractRequest.before(yamlContractRequest.before);
+		}
+	}
+
+	private void mapRequestBaseUri(YamlContract.Request yamlContractRequest, Request dslContractRequest) {
+		if (yamlContractRequest.baseUri != null) {
+			dslContractRequest.baseUri(yamlContractRequest.baseUri);
 		}
 	}
 

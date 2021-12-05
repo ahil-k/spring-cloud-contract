@@ -49,9 +49,10 @@ class RestAssuredGiven implements Given, BodyMethodVisitor, RestAssuredAcceptor 
 	@Override
 	public MethodVisitor<Given> apply(SingleContractMetadata singleContractMetadata) {
 		startBodyBlock(this.blockBuilder, "given:");
-		this.blockBuilder.addLineWithEnding("var name = \"" + singleContractMetadata.getContract().getName() + "\"");
+		this.blockBuilder
+				.addLineWithEnding(String.format("var name = \"%s\"", singleContractMetadata.getContract().getName()));
 		this.blockBuilder.addLineWithEnding(
-				"var description = \"" + singleContractMetadata.getContract().getDescription() + "\"");
+				String.format("var description = \"%s\"", singleContractMetadata.getContract().getDescription()));
 		this.blockBuilder.addLineWithEnding("beforeTest(name, description)");
 		if (null != singleContractMetadata.getContract().getRequest().getBefore()) {
 			this.blockBuilder.addLineWithEnding(
@@ -59,7 +60,11 @@ class RestAssuredGiven implements Given, BodyMethodVisitor, RestAssuredAcceptor 
 		}
 		this.blockBuilder.addEndingIfNotPresent();
 		addRequestGivenLine(singleContractMetadata);
-		this.blockBuilder.addIndented(".log().everything()");
+		String baseUri = singleContractMetadata.getContract().getRequest().getBaseUri();
+		this.blockBuilder.addEmptyLine().addIndented("\t\t.log().everything()");
+		if (null != baseUri) {
+			this.blockBuilder.addEmptyLine().addIndented(String.format("\t\t.baseUri(\"%s\")", baseUri));
+		}
 		indentedBodyBlock(this.blockBuilder, this.bodyGivens, singleContractMetadata);
 		this.blockBuilder.addEmptyLine();
 		return this;

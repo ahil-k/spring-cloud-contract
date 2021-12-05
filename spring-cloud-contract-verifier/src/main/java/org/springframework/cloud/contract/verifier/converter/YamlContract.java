@@ -113,6 +113,8 @@ public class YamlContract {
 
 		public String before;
 
+		public String baseUri;
+
 		@Override
 		public boolean equals(Object o) {
 			if (this == o) {
@@ -129,13 +131,14 @@ public class YamlContract {
 					&& Objects.equals(body, request.body) && Objects.equals(bodyFromFile, request.bodyFromFile)
 					&& Objects.equals(bodyFromFileAsBytes, request.bodyFromFileAsBytes)
 					&& Objects.equals(matchers, request.matchers) && Objects.equals(multipart, request.multipart)
-					&& Objects.equals(after, request.after) && Objects.equals(before, request.before);
+					&& Objects.equals(after, request.after) && Objects.equals(before, request.before)
+					&& Objects.equals(baseUri, request.baseUri);
 		}
 
 		@Override
 		public int hashCode() {
 			return Objects.hash(method, url, urlPath, queryParameters, headers, cookies, body, bodyFromFile,
-					bodyFromFileAsBytes, matchers, multipart, after, before);
+					bodyFromFileAsBytes, matchers, multipart, after, before, baseUri);
 		}
 
 		@Override
@@ -144,7 +147,7 @@ public class YamlContract {
 					+ ", queryParameters=" + queryParameters + ", headers=" + headers + ", cookies=" + cookies
 					+ ", body=" + body + ", bodyFromFile='" + bodyFromFile + '\'' + ", bodyFromFileAsBytes='"
 					+ bodyFromFileAsBytes + '\'' + ", matchers=" + matchers + ", multipart=" + multipart + ", after="
-					+ after + '\'' + ", before=" + before + '\'' + '}';
+					+ after + '\'' + ", before=" + before + '\'' + ", baseUri=" + baseUri + '\'' + '}';
 		}
 
 	}

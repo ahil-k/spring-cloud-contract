@@ -62,6 +62,8 @@ public class Request extends Common implements RegexCreatingProperty<ClientDslPr
 
 	private ExecutionProperty before;
 
+	private String baseUri;
+
 	public Request() {
 	}
 
@@ -75,6 +77,7 @@ public class Request extends Common implements RegexCreatingProperty<ClientDslPr
 		this.multipart = request.getMultipart();
 		this.after = request.getAfter();
 		this.before = request.getBefore();
+		this.baseUri = request.getBaseUri();
 	}
 
 	public ExecutionProperty getAfter() {
@@ -87,6 +90,18 @@ public class Request extends Common implements RegexCreatingProperty<ClientDslPr
 
 	public void after(String after) {
 		this.after = new ExecutionProperty(after);
+	}
+
+	public String getBaseUri() {
+		return baseUri;
+	}
+
+	public void setBaseUri(String baseUri) {
+		this.baseUri = baseUri;
+	}
+
+	public void baseUri(String baseUri) {
+		this.baseUri = baseUri;
 	}
 
 	public ExecutionProperty getBefore() {

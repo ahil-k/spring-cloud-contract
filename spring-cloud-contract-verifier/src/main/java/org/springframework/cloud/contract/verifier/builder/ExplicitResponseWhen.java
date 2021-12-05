@@ -31,10 +31,10 @@ class ExplicitResponseWhen implements When, ExplicitAcceptor {
 
 	@Override
 	public MethodVisitor<When> apply(SingleContractMetadata metadata) {
-		this.blockBuilder.addLineWithEnding(
-				"var url = \"" + metadata.getContract().getRequest().getUrl().getServerValue().toString() + "\"");
-		this.blockBuilder.addLineWithEnding(
-				"var method = \"" + metadata.getContract().getRequest().getMethod().getServerValue().toString() + "\"");
+		this.blockBuilder.addLineWithEnding(String.format("var url = \"%s\"",
+				metadata.getContract().getRequest().getUrl().getServerValue().toString()));
+		this.blockBuilder.addLineWithEnding(String.format("var method = \"%s\"",
+				metadata.getContract().getRequest().getMethod().getServerValue().toString()));
 		this.blockBuilder.addIndented("Response response = given().spec(request)");
 		return this;
 	}
