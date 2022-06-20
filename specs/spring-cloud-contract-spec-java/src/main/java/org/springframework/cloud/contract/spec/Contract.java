@@ -107,6 +107,8 @@ public class Contract {
 
 	private List<String> groups = new ArrayList<>();
 
+	private List<String> dependsOn = new ArrayList<>();
+
 	private String timeout;
 
 	/*
@@ -407,6 +409,18 @@ public class Contract {
 
 	public void groups(List<String> groups) {
 		this.groups = groups;
+	}
+
+	public void dependsOn(List<String> dependsOn) {
+		this.dependsOn = dependsOn;
+	}
+
+	public List<String> getDependsOn() {
+		return dependsOn;
+	}
+
+	public void setDependsOn(List<String> dependsOn) {
+		this.dependsOn = dependsOn;
 	}
 
 	public String getTimeout() {

@@ -152,6 +152,8 @@ public class ContractVerifierExtension implements Serializable {
 	 * positive test execution results on the consumer side.
 	 */
 	private final Property<Boolean> failOnInProgress;
+	
+	private final Property<Boolean> parallel;
 
 	private final ContractRepository contractRepository;
 
@@ -260,6 +262,7 @@ public class ContractVerifierExtension implements Serializable {
 		this.assertJsonSize = objects.property(Boolean.class).convention(false);
 		this.failOnNoContracts = objects.property(Boolean.class).convention(true);
 		this.failOnInProgress = objects.property(Boolean.class).convention(true);
+		this.parallel = objects.property(Boolean.class).convention(true);
 		this.contractRepository = objects.newInstance(ContractRepository.class);
 		this.publishStubsToScm = objects.newInstance(PublishStubsToScm.class);
 		this.contractDependency = objects.newInstance(Dependency.class);
@@ -452,6 +455,10 @@ public class ContractVerifierExtension implements Serializable {
 
 	public void setFailOnInProgress(boolean failOnInProgress) {
 		this.failOnInProgress.set(failOnInProgress);
+	}
+
+	public Property<Boolean> getParallel() {
+		return parallel;
 	}
 
 	public ContractRepository getContractRepository() {

@@ -41,6 +41,8 @@ class MethodAnnotationBuilder {
 				new JUnit5IgnoreMethodAnnotation(this.builder, this.metaData),
 				new JUnit5TimeoutAnnotation(this.builder, this.metaData),
 				new JUnit5ParameterizedAnnotation(this.builder, this.metaData),
+				new JUnit5DependsOnAnnotation(this.builder, this.metaData),
+				new CustomTestMetadataAnnotation(this.builder, this.metaData),
 				new JUnit5TagAnnotation(this.builder, this.metaData));
 		return this;
 	}

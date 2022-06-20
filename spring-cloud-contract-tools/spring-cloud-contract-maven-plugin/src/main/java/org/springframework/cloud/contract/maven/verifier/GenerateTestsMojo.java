@@ -235,6 +235,9 @@ public class GenerateTestsMojo extends AbstractMojo {
 	@Parameter(property = "failOnInProgress", defaultValue = "true")
 	private boolean failOnInProgress = true;
 
+	@Parameter(property = "parallel", defaultValue = "true")
+	private boolean parallel = true;
+
 	/**
 	 * If set to true then tests are created only when contracts have changed since last
 	 * build.
@@ -267,6 +270,7 @@ public class GenerateTestsMojo extends AbstractMojo {
 		getLog().info("Generating server tests source code for Spring Cloud Contract Verifier contract verification");
 		final ContractVerifierConfigProperties config = new ContractVerifierConfigProperties();
 		config.setFailOnInProgress(this.failOnInProgress);
+		config.setParallel(this.parallel);
 		// download contracts, unzip them and pass as output directory
 		File contractsDirectory = new MavenContractsDownloader(this.project, this.contractDependency,
 				this.contractsPath, this.contractsRepositoryUrl, this.contractsMode, getLog(),

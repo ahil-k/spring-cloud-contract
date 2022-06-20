@@ -60,6 +60,8 @@ public class YamlContract {
 
 	public List<String> groups = new ArrayList<>();
 
+	public List<String> dependsOn = new ArrayList<>();
+
 	public String timeout;
 
 	public int repeat;
@@ -82,13 +84,13 @@ public class YamlContract {
 				&& Objects.equals(this.name, that.name) && Objects.equals(this.priority, that.priority)
 				&& this.metadata.equals(that.metadata) && Objects.equals(groups, that.groups)
 				&& Objects.equals(timeout, that.timeout) && Objects.equals(this.parameters, that.parameters)
-				&& Objects.equals(repeat, that.repeat);
+				&& Objects.equals(repeat, that.repeat) && Objects.equals(dependsOn, that.dependsOn);
 	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(request, response, input, outputMessage, description, label, name, priority, ignored,
-				inProgress, metadata, groups, timeout, parameters, repeat);
+				inProgress, metadata, groups, timeout, parameters, repeat, dependsOn);
 	}
 
 	public static class Request {

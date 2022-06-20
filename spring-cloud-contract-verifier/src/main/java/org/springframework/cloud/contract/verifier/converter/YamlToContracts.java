@@ -117,6 +117,7 @@ class YamlToContracts {
 				mapInput(yamlContract, dslContract);
 				mapOutput(yamlContract, dslContract);
 				mapRequestGroups(yamlContract, dslContract);
+				mapRequestDependsOn(yamlContract, dslContract);
 				mapRequestTimeout(yamlContract, dslContract);
 				mapRequestParameters(yamlContract, dslContract);
 				mapRequestRepeat(yamlContract, dslContract);
@@ -586,6 +587,12 @@ class YamlToContracts {
 	private void mapRequestGroups(YamlContract yamlContract, Contract dslContract) {
 		if (yamlContract.groups != null) {
 			dslContract.groups(yamlContract.groups);
+		}
+	}
+
+	private void mapRequestDependsOn(YamlContract yamlContract, Contract dslContract) {
+		if (yamlContract.dependsOn != null) {
+			dslContract.dependsOn(yamlContract.dependsOn);
 		}
 	}
 

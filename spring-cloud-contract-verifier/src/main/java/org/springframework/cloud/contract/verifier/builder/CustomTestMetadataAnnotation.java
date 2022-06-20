@@ -16,36 +16,32 @@
 
 package org.springframework.cloud.contract.verifier.builder;
 
-import java.util.Arrays;
-
 import org.springframework.cloud.contract.verifier.config.TestFramework;
+import org.springframework.cloud.contract.verifier.file.SingleContractMetadata;
 
-class JUnit5Imports implements Imports {
+class CustomTestMetadataAnnotation implements MethodAnnotations {
 
 	private final BlockBuilder blockBuilder;
 
 	private final GeneratedClassMetaData generatedClassMetaData;
 
-	private static final String[] IMPORTS = { "org.junit.jupiter.api.Test",
-			"org.junit.jupiter.api.extension.ExtendWith", "org.junit.jupiter.api.Tag", "org.junit.jupiter.api.Timeout",
-			"java.util.concurrent.TimeUnit", "org.junit.jupiter.params.ParameterizedTest",
-			"org.junit.jupiter.params.provider.ArgumentsSource", "org.junit.jupiter.api.RepeatedTest",
-			"org.junit.jupiter.api.*", "org.junit.jupiter.api.parallel.Execution",
-			"org.junit.jupiter.api.parallel.ExecutionMode" };
+	private static final String ANNOTATION = "@com.vmware.iris.resttest.annnotation.TestMetadata(name=\"%s\", description=\"%s\")";
 
-	JUnit5Imports(BlockBuilder blockBuilder, GeneratedClassMetaData generatedClassMetaData) {
+	CustomTestMetadataAnnotation(BlockBuilder blockBuilder, GeneratedClassMetaData generatedClassMetaData) {
 		this.blockBuilder = blockBuilder;
 		this.generatedClassMetaData = generatedClassMetaData;
 	}
 
 	@Override
-	public Imports call() {
-		Arrays.stream(IMPORTS).forEach(s -> this.blockBuilder.addLineWithEnding("import " + s));
+	public MethodVisitor<MethodAnnotations> apply(SingleContractMetadata singleContractMetadata) {
+		String name = singleContractMetadata.getContract().getName();
+		String description = singleContractMetadata.getContract().getDescription();
+		this.blockBuilder.addIndented(String.format(ANNOTATION, name, description));
 		return this;
 	}
 
 	@Override
-	public boolean accept() {
+	public boolean accept(SingleContractMetadata singleContractMetadata) {
 		return this.generatedClassMetaData.configProperties.getTestFramework() == TestFramework.JUNIT5;
 	}
 

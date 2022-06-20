@@ -53,7 +53,6 @@ class RestAssuredGiven implements Given, BodyMethodVisitor, RestAssuredAcceptor 
 				.addLineWithEnding(String.format("var name = \"%s\"", singleContractMetadata.getContract().getName()));
 		this.blockBuilder.addLineWithEnding(
 				String.format("var description = \"%s\"", singleContractMetadata.getContract().getDescription()));
-		this.blockBuilder.addLineWithEnding("beforeTest(name, description)");
 		if (null != singleContractMetadata.getContract().getRequest().getBefore()) {
 			this.blockBuilder.addLineWithEnding(
 					singleContractMetadata.getContract().getRequest().getBefore().getExecutionCommand());
@@ -64,6 +63,9 @@ class RestAssuredGiven implements Given, BodyMethodVisitor, RestAssuredAcceptor 
 		this.blockBuilder.addEmptyLine().addIndented("\t\t.log().everything()");
 		if (null != baseUri) {
 			this.blockBuilder.addEmptyLine().addIndented(String.format("\t\t.baseUri(renderContent(\"%s\"))", baseUri));
+		}
+		else {
+			this.blockBuilder.addEmptyLine().addIndented("\t\t.baseUri(BASE_URI)");
 		}
 		indentedBodyBlock(this.blockBuilder, this.bodyGivens, singleContractMetadata);
 		this.blockBuilder.addEmptyLine();

@@ -16,39 +16,38 @@
 
 package org.springframework.cloud.contract.verifier.builder;
 
-import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import org.springframework.cloud.contract.verifier.config.TestFramework;
+import org.springframework.cloud.contract.verifier.file.SingleContractMetadata;
 
-class JUnit5OrderClassAnnotation implements ClassAnnotation {
+class JUnit5DependsOnAnnotation implements MethodAnnotations {
 
 	private final BlockBuilder blockBuilder;
 
 	private final GeneratedClassMetaData generatedClassMetaData;
 
-	private static final String[] ANNOTATIONS = { "@Execution(ExecutionMode.CONCURRENT)",
-			"@TestMethodOrder(MethodOrderer.MethodName.class)" };
+	private static final String ANNOTATION = "@com.vmware.iris.resttest.annnotation.DependsOn({%s})";
 
-	JUnit5OrderClassAnnotation(BlockBuilder blockBuilder, GeneratedClassMetaData generatedClassMetaData) {
+	JUnit5DependsOnAnnotation(BlockBuilder blockBuilder, GeneratedClassMetaData generatedClassMetaData) {
 		this.blockBuilder = blockBuilder;
 		this.generatedClassMetaData = generatedClassMetaData;
 	}
 
 	@Override
-	public ClassAnnotation call() {
-		if (this.generatedClassMetaData.configProperties.isParallel()) {
-			Arrays.stream(ANNOTATIONS).forEach(this.blockBuilder::addLine);
-		}
-		else {
-			this.blockBuilder.addLine(ANNOTATIONS[1]);
-		}
+	public MethodVisitor<MethodAnnotations> apply(SingleContractMetadata singleContractMetadata) {
+		String deps = singleContractMetadata.getContract().getDependsOn().stream().map(x -> String.format("\"%s\"", x))
+				.collect(Collectors.joining(","));
+		this.blockBuilder.addIndented(String.format(ANNOTATION, deps));
 		return this;
 	}
 
 	@Override
-	public boolean accept() {
+	public boolean accept(SingleContractMetadata singleContractMetadata) {
 		return this.generatedClassMetaData.configProperties.getTestFramework() == TestFramework.JUNIT5
-				&& this.generatedClassMetaData.listOfFiles.stream().anyMatch(meta -> meta.getOrder() != null);
+				&& singleContractMetadata.getContract().getDependsOn() != null
+				&& !singleContractMetadata.getContract().getDependsOn().isEmpty()
+				&& this.generatedClassMetaData.configProperties.isParallel();
 	}
 
 }

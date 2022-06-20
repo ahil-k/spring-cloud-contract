@@ -175,6 +175,8 @@ public class ContractVerifierConfigProperties {
 	 */
 	private boolean failOnInProgress = true;
 
+	private boolean parallel = true;
+
 	public TestFramework getTestFramework() {
 		return testFramework;
 	}
@@ -361,6 +363,14 @@ public class ContractVerifierConfigProperties {
 
 	public void setFailOnInProgress(boolean failOnInProgress) {
 		this.failOnInProgress = failOnInProgress;
+	}
+
+	public boolean isParallel() {
+		return parallel;
+	}
+
+	public void setParallel(boolean parallel) {
+		this.parallel = parallel;
 	}
 
 }
