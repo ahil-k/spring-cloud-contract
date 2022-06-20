@@ -16,6 +16,7 @@
 
 package org.springframework.cloud.contract.verifier.builder;
 
+import org.springframework.cloud.contract.spec.internal.Parameters;
 import org.springframework.cloud.contract.verifier.config.TestFramework;
 import org.springframework.cloud.contract.verifier.file.SingleContractMetadata;
 
@@ -46,6 +47,12 @@ class SpockMethodMetadata implements MethodMetadata {
 	@Override
 	public MethodMetadata returnType() {
 		this.blockBuilder.addIndented("def");
+		return this;
+	}
+
+	@Override
+	public MethodMetadata arguments(SingleContractMetadata metadata) {
+		this.blockBuilder.addAtTheEnd("()");
 		return this;
 	}
 

@@ -63,7 +63,7 @@ class RestAssuredGiven implements Given, BodyMethodVisitor, RestAssuredAcceptor 
 		String baseUri = singleContractMetadata.getContract().getRequest().getBaseUri();
 		this.blockBuilder.addEmptyLine().addIndented("\t\t.log().everything()");
 		if (null != baseUri) {
-			this.blockBuilder.addEmptyLine().addIndented(String.format("\t\t.baseUri(\"%s\")", baseUri));
+			this.blockBuilder.addEmptyLine().addIndented(String.format("\t\t.baseUri(renderContent(\"%s\"))", baseUri));
 		}
 		indentedBodyBlock(this.blockBuilder, this.bodyGivens, singleContractMetadata);
 		this.blockBuilder.addEmptyLine();

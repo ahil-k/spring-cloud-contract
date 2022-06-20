@@ -28,6 +28,7 @@ import groovy.lang.DelegatesTo;
 
 import org.springframework.cloud.contract.spec.internal.Input;
 import org.springframework.cloud.contract.spec.internal.OutputMessage;
+import org.springframework.cloud.contract.spec.internal.Parameters;
 import org.springframework.cloud.contract.spec.internal.Request;
 import org.springframework.cloud.contract.spec.internal.Response;
 
@@ -107,6 +108,13 @@ public class Contract {
 	private List<String> groups = new ArrayList<>();
 
 	private String timeout;
+
+	/*
+	 * custom iris parameter
+	 */
+	private Parameters parameters;
+
+	private int repeat;
 
 	public Contract() {
 
@@ -413,6 +421,22 @@ public class Contract {
 		this.timeout = timeout;
 	}
 
+	public Parameters getParameters() {
+		return parameters;
+	}
+
+	public void setParameters(Parameters parameters) {
+		this.parameters = parameters;
+	}
+
+	public int getRepeat() {
+		return repeat;
+	}
+
+	public void setRepeat(int repeat) {
+		this.repeat = repeat;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {
@@ -427,13 +451,14 @@ public class Contract {
 				&& Objects.equals(label, contract.label) && Objects.equals(description, contract.description)
 				&& Objects.equals(name, contract.name) && Objects.equals(input, contract.input)
 				&& Objects.equals(metadata, contract.metadata) && Objects.equals(outputMessage, contract.outputMessage)
-				&& Objects.equals(groups, contract.groups) && Objects.equals(timeout, contract.timeout);
+				&& Objects.equals(groups, contract.groups) && Objects.equals(timeout, contract.timeout)
+				&& Objects.equals(parameters, contract.parameters);
 	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(priority, request, response, label, description, name, input, outputMessage, metadata,
-				ignored, groups, timeout);
+				ignored, groups, timeout, parameters);
 	}
 
 	@Override
@@ -441,7 +466,7 @@ public class Contract {
 		return "Contract{" + "\npriority=" + priority + ", \n\trequest=" + request + ", \n\tresponse=" + response
 				+ ", \n\tlabel='" + label + '\'' + ", \n\tdescription='" + description + '\'' + ", \n\tname='" + name
 				+ '\'' + ", \n\tinput=" + input + ", \n\toutputMessage=" + outputMessage + ", \n\tignored=" + ignored
-				+ ", \n\tgroups=" + groups + ", \n\ttimeout=" + timeout + '}';
+				+ ", \n\tgroups=" + groups + ", \n\ttimeout=" + timeout + ", \n\t=parameters" + parameters + '}';
 	}
 
 }

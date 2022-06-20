@@ -118,6 +118,8 @@ class YamlToContracts {
 				mapOutput(yamlContract, dslContract);
 				mapRequestGroups(yamlContract, dslContract);
 				mapRequestTimeout(yamlContract, dslContract);
+				mapRequestParameters(yamlContract, dslContract);
+				mapRequestRepeat(yamlContract, dslContract);
 			});
 			contracts.add(contract);
 		}
@@ -323,6 +325,8 @@ class YamlToContracts {
 				String fileContentCommand = namedParam.fileContentCommand;
 				String fileNameCommand = namedParam.fileNameCommand;
 				Object contentTypeValue = namedParam.contentType;
+				String[] filePaths = namedParam.filePaths;
+				List<File> files = new ArrayList<File>();
 				if (matcher != null && matcher.fileName != null) {
 					fileNameValue = matcher.fileName.regex != null ? Pattern.compile(matcher.fileName.regex)
 							: predefinedToPattern(matcher.fileName.predefined);
@@ -335,11 +339,16 @@ class YamlToContracts {
 					contentTypeValue = matcher.contentType.regex != null ? Pattern.compile(matcher.contentType.regex)
 							: predefinedToPattern(matcher.contentType.predefined);
 				}
+				if (namedParam.filePaths != null && namedParam.filePaths.length != 0) {
+					for (String filepath : filePaths) {
+						files.add(new File(filepath));
+					}
+				}
 				multipartMap.put(namedParam.paramName, new NamedProperty(
 						new DslProperty<>(fileNameValue,
 								fileNameCommand != null ? new ExecutionProperty(fileNameCommand) : namedParam.fileName),
-						new DslProperty<>(fileContentValue,
-								namedParam.fileContent != null ? namedParam.fileContent
+						new DslProperty<>(fileContentValue, namedParam.fileContent != null ? namedParam.fileContent
+								: (namedParam.filePaths != null && namedParam.filePaths.length != 0) ? files
 										: fileContentFromFileAsBytes != null
 												? dslContractRequest.fileAsBytes(namedParam.fileContentFromFileAsBytes)
 												: fileContentAsBytes != null ? fileContentAsBytes.getBytes()
@@ -583,6 +592,18 @@ class YamlToContracts {
 	private void mapRequestTimeout(YamlContract yamlContract, Contract dslContract) {
 		if (yamlContract.timeout != null) {
 			dslContract.timeout(yamlContract.timeout);
+		}
+	}
+
+	private void mapRequestParameters(YamlContract yamlContract, Contract dslContract) {
+		if (yamlContract.parameters != null) {
+			dslContract.setParameters(yamlContract.parameters);
+		}
+	}
+
+	private void mapRequestRepeat(YamlContract yamlContract, Contract dslContract) {
+		if (yamlContract.repeat != 0) {
+			dslContract.setRepeat(yamlContract.repeat);
 		}
 	}
 

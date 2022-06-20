@@ -40,6 +40,7 @@ class MethodAnnotationBuilder {
 		this.singleMethodBuilder.methodAnnotation(new JUnit5MethodAnnotation(this.builder, this.metaData),
 				new JUnit5IgnoreMethodAnnotation(this.builder, this.metaData),
 				new JUnit5TimeoutAnnotation(this.builder, this.metaData),
+				new JUnit5ParameterizedAnnotation(this.builder, this.metaData),
 				new JUnit5TagAnnotation(this.builder, this.metaData));
 		return this;
 	}

@@ -29,6 +29,10 @@ class JUnit5MethodAnnotation implements MethodAnnotations {
 
 	private static final String[] ANNOTATIONS = { "@Test" };
 
+	private static final String[] PARAMETERIZED_ANNOTATIONS = { "@ParameterizedTest" };
+
+	private static final String REPEATED_ANNOTATION = "@RepeatedTest(%d)";
+
 	JUnit5MethodAnnotation(BlockBuilder blockBuilder, GeneratedClassMetaData generatedClassMetaData) {
 		this.blockBuilder = blockBuilder;
 		this.generatedClassMetaData = generatedClassMetaData;
@@ -36,7 +40,20 @@ class JUnit5MethodAnnotation implements MethodAnnotations {
 
 	@Override
 	public MethodVisitor<MethodAnnotations> apply(SingleContractMetadata singleContractMetadata) {
-		Arrays.stream(ANNOTATIONS).forEach(this.blockBuilder::addIndented);
+		int repeat = singleContractMetadata.getContract().getRepeat();
+		if (singleContractMetadata.getContract().getParameters() != null) {
+			Arrays.stream(PARAMETERIZED_ANNOTATIONS).forEach(this.blockBuilder::addIndented);
+			String parametersName = singleContractMetadata.getContract().getParameters().getName();
+			if (parametersName != null) {
+				this.blockBuilder.append(String.format("(name = \"%s\")", parametersName));
+			}
+		}
+		else if (repeat != 0) {
+			this.blockBuilder.addIndented(String.format(REPEATED_ANNOTATION, repeat));
+		}
+		else {
+			Arrays.stream(ANNOTATIONS).forEach(this.blockBuilder::addIndented);
+		}
 		return this;
 	}
 

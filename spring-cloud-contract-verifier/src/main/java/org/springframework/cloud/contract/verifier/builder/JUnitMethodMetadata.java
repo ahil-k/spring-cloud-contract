@@ -16,6 +16,7 @@
 
 package org.springframework.cloud.contract.verifier.builder;
 
+import org.springframework.cloud.contract.spec.internal.Parameters;
 import org.springframework.cloud.contract.verifier.config.TestFramework;
 import org.springframework.cloud.contract.verifier.file.SingleContractMetadata;
 
@@ -47,6 +48,22 @@ class JUnitMethodMetadata implements MethodMetadata {
 	@Override
 	public MethodMetadata returnType() {
 		this.blockBuilder.append("void");
+		return this;
+	}
+
+	@Override
+	public MethodMetadata arguments(SingleContractMetadata singleContractMetadata) {
+		Parameters parameters = singleContractMetadata.getContract().getParameters();
+		int repeat = singleContractMetadata.getContract().getRepeat();
+		if (null != parameters) {
+			this.blockBuilder.addAtTheEnd(String.format("(%s)", parameters.getArguments()));
+		}
+		else if (0 != repeat) {
+			this.blockBuilder.addAtTheEnd("(RepetitionInfo repetitionInfo)");
+		}
+		else {
+			this.blockBuilder.addAtTheEnd("()");
+		}
 		return this;
 	}
 

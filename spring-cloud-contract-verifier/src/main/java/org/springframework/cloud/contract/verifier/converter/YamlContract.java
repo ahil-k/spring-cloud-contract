@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.springframework.cloud.contract.spec.Contract;
+import org.springframework.cloud.contract.spec.internal.Parameters;
 
 /**
  * YAML representation of a {@link Contract}.
@@ -61,6 +62,10 @@ public class YamlContract {
 
 	public String timeout;
 
+	public int repeat;
+
+	public Parameters parameters;
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {
@@ -76,13 +81,14 @@ public class YamlContract {
 				&& Objects.equals(this.description, that.description) && Objects.equals(this.label, that.label)
 				&& Objects.equals(this.name, that.name) && Objects.equals(this.priority, that.priority)
 				&& this.metadata.equals(that.metadata) && Objects.equals(groups, that.groups)
-				&& Objects.equals(timeout, that.timeout);
+				&& Objects.equals(timeout, that.timeout) && Objects.equals(this.parameters, that.parameters)
+				&& Objects.equals(repeat, that.repeat);
 	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(request, response, input, outputMessage, description, label, name, priority, ignored,
-				inProgress, metadata, groups, timeout);
+				inProgress, metadata, groups, timeout, parameters, repeat);
 	}
 
 	public static class Request {
@@ -202,6 +208,8 @@ public class YamlContract {
 
 		public String contentTypeCommand;
 
+		public String[] filePaths;
+
 		@Override
 		public boolean equals(Object o) {
 			if (this == o) {
@@ -218,13 +226,14 @@ public class YamlContract {
 					&& Objects.equals(contentType, named.contentType)
 					&& Objects.equals(fileNameCommand, named.fileNameCommand)
 					&& Objects.equals(fileContentCommand, named.fileContentCommand)
+					&& Objects.equals(filePaths, named.filePaths)
 					&& Objects.equals(contentTypeCommand, named.contentTypeCommand);
 		}
 
 		@Override
 		public int hashCode() {
 			return Objects.hash(paramName, fileName, fileContent, fileContentAsBytes, fileContentFromFileAsBytes,
-					contentType, fileNameCommand, fileContentCommand, contentTypeCommand);
+					contentType, fileNameCommand, fileContentCommand, contentTypeCommand, filePaths);
 		}
 
 		@Override

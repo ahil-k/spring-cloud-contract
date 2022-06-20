@@ -32,4 +32,6 @@ interface MethodMetadata extends Acceptor {
 	// void
 	MethodMetadata returnType();
 
+	MethodMetadata arguments(SingleContractMetadata metadata);
+
 }

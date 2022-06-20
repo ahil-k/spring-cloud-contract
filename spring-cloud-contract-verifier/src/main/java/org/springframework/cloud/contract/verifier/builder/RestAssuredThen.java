@@ -37,7 +37,8 @@ class RestAssuredThen implements Then, BodyMethodVisitor, RestAssuredAcceptor {
 		this.thens.addAll(Arrays.asList(new RestAssuredStatusCodeThen(this.blockBuilder, comparisonBuilder),
 				new RestAssuredHeadersThen(this.blockBuilder, comparisonBuilder),
 				new RestAssuredCookiesThen(this.blockBuilder, comparisonBuilder),
-				new GenericHttpBodyThen(this.blockBuilder, generatedClassMetaData, bodyParser, comparisonBuilder)));
+				new GenericHttpBodyThen(this.blockBuilder, generatedClassMetaData, bodyParser, comparisonBuilder),
+				new GenericAfterBodyThen(blockBuilder)));
 	}
 
 	@Override

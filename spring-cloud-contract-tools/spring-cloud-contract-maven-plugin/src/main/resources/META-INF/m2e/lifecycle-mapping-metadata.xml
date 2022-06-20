@@ -3,11 +3,9 @@
 		<pluginExecution>
 			<pluginExecutionFilter>
 				<goals>
-					<goal>convert</goal>
+					<!-- <goal>convert</goal> -->
 					<goal>run</goal>
 					<goal>generateTests</goal>
-					<goal>generateStubs</goal>
-					<goal>pushStubsToScm</goal>
 				</goals>
 			</pluginExecutionFilter>
 			<action>

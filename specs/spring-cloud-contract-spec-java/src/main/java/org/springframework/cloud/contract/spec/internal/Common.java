@@ -17,9 +17,10 @@
 package org.springframework.cloud.contract.spec.internal;
 
 import java.io.File;
-import java.net.URISyntaxException;
-import java.net.URL;
+import java.net.URI;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -239,16 +240,19 @@ public class Common {
 	 * @return file contents as an array of bytes
 	 */
 	private File fileLocation(String relativePath) {
-		URL resource = Thread.currentThread().getContextClassLoader().getResource(relativePath);
-		if (resource == null) {
-			throw new IllegalStateException("File [" + relativePath + "] is not present");
+		Path currentRelativePath = Paths.get("");
+		String s = currentRelativePath.toAbsolutePath().toString();
+		System.out.println("Current absolute path is: " + s);
+		URI resource = Paths.get(relativePath).toUri();
+		File f = new File(resource);
+		if (f.exists()) {
+			System.out.println("Exists" + resource.getPath());
+			return f;
 		}
-		try {
-			return new File(resource.toURI());
+		else {
+			System.err.println("Does not Exists");
 		}
-		catch (URISyntaxException ex) {
-			throw new IllegalStateException(ex);
-		}
+		return null;
 	}
 
 	/**

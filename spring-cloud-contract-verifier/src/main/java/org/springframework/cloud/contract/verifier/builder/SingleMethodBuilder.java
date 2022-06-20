@@ -181,7 +181,8 @@ class SingleMethodBuilder {
 			this.blockBuilder.append(methodMetadatum::modifier)
 					.appendWithSpace(methodMetadatum::returnType)
 					.appendWithSpace(() -> methodMetadatum.name(metaData))
-					.append("() throws Exception ");
+					.append(() -> methodMetadatum.arguments(metaData))
+					.append(" throws Exception ");
 			// (space) {
 			this.blockBuilder.inBraces(() -> {
 				// (indent) given

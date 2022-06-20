@@ -656,6 +656,9 @@ class ContentUtils {
 			}
 			return "new byte[] {" + fromFileProperty.asBytes().collect { it }.
 					join(", ") + "}"
+		} else if (property.value.serverValue instanceof File) {
+			File f = (File) property.value.serverValue
+			return "new java.io.File("+ quote +f.getAbsolutePath()+quote +")"
 		}
 		return quote +
 				escapeJava(property.value.serverValue.toString()) + quote + ".getBytes()"

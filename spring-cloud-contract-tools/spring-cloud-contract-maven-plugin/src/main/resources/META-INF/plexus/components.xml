@@ -29,15 +29,9 @@
 					<phase>spring-cloud-contract-verifier-not-used-phase</phase>
 				</phases>
 				<default-phases>
-					<process-test-resources>
-						org.springframework.cloud:spring-cloud-contract-maven-plugin:${project.version}:convert
-					</process-test-resources>
 					<generate-test-sources>
 						org.springframework.cloud:spring-cloud-contract-maven-plugin:${project.version}:generateTests
 					</generate-test-sources>
-					<package>
-						org.springframework.cloud:spring-cloud-contract-maven-plugin:${project.version}:generateStubs
-					</package>
 				</default-phases>
 			</configuration>
 		</component>

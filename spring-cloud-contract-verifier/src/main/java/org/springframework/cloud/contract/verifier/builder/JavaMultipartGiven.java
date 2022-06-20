@@ -16,6 +16,9 @@
 
 package org.springframework.cloud.contract.verifier.builder;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.cloud.contract.spec.internal.NamedProperty;
@@ -53,6 +56,13 @@ class JavaMultipartGiven implements Given, RestAssuredAcceptor {
 
 	private String getMultipartParameterLine(SingleContractMetadata metadata, Map.Entry<String, Object> parameter) {
 		if (parameter.getValue() instanceof NamedProperty) {
+			if (((NamedProperty) parameter.getValue()).getValue().getServerValue() instanceof ArrayList) {
+				List<File> files = (List<File>) ((NamedProperty) parameter.getValue()).getValue().getServerValue();
+				files.forEach(f -> this.blockBuilder.addLine(".multiPart(\"" + parameter.getKey()
+						+ "\", new java.io.File(\"" + f.getAbsolutePath() + "\"))"));
+
+				return "";
+			}
 			return ".multiPart(" + getMultipartFileParameterContent(metadata, parameter.getKey(),
 					(NamedProperty) parameter.getValue()) + ")";
 		}
